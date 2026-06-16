@@ -1,0 +1,10 @@
+db.users.adggregate([
+    {
+$lookup:{
+    from: "orders",
+    localfield:"_id",
+    forigenFie;;ld:"user_id",
+    as: "orders
+    }
+    }
+])

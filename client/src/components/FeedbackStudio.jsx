@@ -1,4 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import {
+  clearInterviewCache,
+  mergeInterviewCache,
+  readInterviewCache,
+  subscribeInterviewCache,
+} from "../utils/interviewStore";
 
 const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -23,8 +29,9 @@ const FeedbackStudio = ({ token }) => {
         setError(data.message || 'Unable to load feedback.');
         return;
       }
-      setItems(data.interviews || []);
+      setItems(mergeInterviewCache(data.interviews || []));
     } catch (err) {
+      setItems(readInterviewCache());
       setError('Network error. Please try again.');
     } finally {
       setLoading(false);
@@ -35,6 +42,10 @@ const FeedbackStudio = ({ token }) => {
     if (token) {
       fetchInterviews();
     }
+    const unsubscribe = subscribeInterviewCache((cachedItems) => {
+      setItems(cachedItems);
+    });
+    return unsubscribe;
   }, [token]);
 
   const handleClear = async () => {
@@ -58,6 +69,7 @@ const FeedbackStudio = ({ token }) => {
       }
       setItems([]);
       setOpenIndex(null);
+      clearInterviewCache();
     } catch (err) {
       setError('Network error. Please try again.');
     } finally {

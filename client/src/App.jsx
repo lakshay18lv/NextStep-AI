@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Landing from './components/Landing';
 import AuthPage from './components/AuthPage';
 import Dashboard from './components/Dashboard';
 import FeedbackStudio from './components/FeedbackStudio';
+import SkillTracker from './components/SkillTracker';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
@@ -12,7 +13,7 @@ const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 const AuthWrapper = ({ mode, onAuth, loading }) => {
   const navigate = useNavigate();
 
-  const handleSubmit = async (form, isRegister, setError) => {
+  const handleSubmit = async (form, isRegister, setError, setSuccess) => {
     try {
       const endpoint = isRegister ? '/api/auth/register' : '/api/auth/login';
       const res = await fetch(`${apiBase}${endpoint}`, {
@@ -23,7 +24,16 @@ const AuthWrapper = ({ mode, onAuth, loading }) => {
 
       const data = await res.json();
       if (!res.ok) {
+        if (data.requiresVerification) {
+          setSuccess(data.message || 'Please verify your email before login.');
+          return;
+        }
         setError(data.message || 'Something went wrong');
+        return;
+      }
+
+      if (data.requiresVerification) {
+        setSuccess(data.message || 'Verification email sent. Please verify your email before login.');
         return;
       }
 
@@ -93,8 +103,16 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/skills"
+            element={
+              <ProtectedRoute isAuthenticated={Boolean(token)}>
+                <SkillTracker token={token} />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
-        <footer>Built for NextStep AI � Prepare smarter, not harder.</footer>
+        <footer>Built for NextStep AI • Prepare smarter, not harder.</footer>
       </div>
     </Router>
   );

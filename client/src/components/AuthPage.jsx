@@ -4,6 +4,7 @@ const AuthPage = ({ mode, onSubmit, loading }) => {
   const isRegister = mode === 'register';
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -12,13 +13,14 @@ const AuthPage = ({ mode, onSubmit, loading }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
 
     if (!form.email || !form.password || (isRegister && !form.name)) {
       setError('Please fill in all required fields.');
       return;
     }
 
-    const result = await onSubmit(form, isRegister, setError);
+    const result = await onSubmit(form, isRegister, setError, setSuccess);
     return result;
   };
 
@@ -58,6 +60,7 @@ const AuthPage = ({ mode, onSubmit, loading }) => {
             onChange={handleChange}
           />
           {error && <div className="error">{error}</div>}
+          {success && <div className="helper">{success}</div>}
           <button className="button primary" style={{ width: '100%', marginTop: '16px' }} disabled={loading}>
             {loading ? 'Please wait...' : isRegister ? 'Create account' : 'Login'}
           </button>
