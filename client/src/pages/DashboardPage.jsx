@@ -1,8 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { prependInterviewCache } from "../utils/interviewStore";
-
-const apiBase = import.meta.env.VITE_API_URL || "http://localhost:5000";
+import { API_BASE_URL } from "../config/api";
+import { prependInterviewCache } from "../services/interviewStore";
 
 const analyzeAnswer = (answer) => {
   const text = answer.trim();
@@ -166,7 +165,7 @@ const Dashboard = ({ user, token }) => {
     try {
       setGenerating(true);
       setGenerationStatus("");
-      const res = await fetch(`${apiBase}/api/interviews/generate`, {
+      const res = await fetch(`${API_BASE_URL}/api/interviews/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -232,7 +231,7 @@ const Dashboard = ({ user, token }) => {
       try {
         setSaveError("");
         setSaving(true);
-        const res = await fetch(`${apiBase}/api/interviews`, {
+        const res = await fetch(`${API_BASE_URL}/api/interviews`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

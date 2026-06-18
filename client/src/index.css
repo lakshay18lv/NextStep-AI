@@ -2,18 +2,18 @@
   font-family: "Space Grotesk", "Sora", sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #f9f7f2;
-  background-color: #0b0b10;
+  color: #0f172a;
+  background-color: #f8fbff;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  --bg: #0b0b10;
-  --panel: #13131a;
-  --panel-2: #1b1b27;
-  --accent: #f4b740;
-  --accent-2: #2ec4b6;
-  --text: #f9f7f2;
-  --muted: #c1b8a6;
-  --danger: #ff6b6b;
+  --bg: #f8fbff;
+  --panel: #ffffff;
+  --panel-2: #eef5ff;
+  --accent: #2563eb;
+  --accent-2: #60a5fa;
+  --text: #0f172a;
+  --muted: #64748b;
+  --danger: #dc2626;
 }
 
 * {
@@ -24,8 +24,9 @@
 
 body {
   min-height: 100vh;
-  background: radial-gradient(circle at top, #1a1a2e 0%, #0b0b10 55%),
-    linear-gradient(135deg, rgba(244, 183, 64, 0.1), rgba(46, 196, 182, 0.05));
+  background:
+    radial-gradient(circle at top, rgba(96, 165, 250, 0.2) 0%, rgba(248, 251, 255, 0.92) 45%),
+    linear-gradient(180deg, #f8fbff 0%, #eaf2ff 100%);
   color: var(--text);
 }
 
@@ -66,7 +67,7 @@ button {
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   display: grid;
   place-items: center;
-  color: #1b1b27;
+  color: white;
   font-weight: 800;
 }
 
@@ -87,13 +88,13 @@ button {
 
 .button.primary {
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #1b1b27;
+  color: #ffffff;
   font-weight: 700;
 }
 
 .button.outline {
   background: transparent;
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(37, 99, 235, 0.18);
 }
 
 .button:hover {
@@ -122,12 +123,12 @@ button {
 }
 
 .hero-card {
-  background: rgba(19, 19, 26, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(37, 99, 235, 0.1);
   border-radius: 24px;
   padding: 28px;
   backdrop-filter: blur(12px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 20px 60px rgba(37, 99, 235, 0.12);
 }
 
 .metrics {
@@ -141,6 +142,7 @@ button {
   background: var(--panel);
   padding: 16px;
   border-radius: 16px;
+  border: 1px solid rgba(37, 99, 235, 0.08);
 }
 
 .metric span {
@@ -169,7 +171,7 @@ button {
   background: var(--panel-2);
   padding: 20px;
   border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(37, 99, 235, 0.08);
 }
 
 .feature h3 {
@@ -184,11 +186,11 @@ button {
 
 .auth-card {
   width: min(420px, 92vw);
-  background: rgba(19, 19, 26, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(37, 99, 235, 0.12);
   border-radius: 24px;
   padding: 28px;
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 24px 50px rgba(37, 99, 235, 0.12);
 }
 
 .auth-card h2 {
@@ -200,13 +202,13 @@ button {
   padding: 12px 14px;
   margin-top: 10px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(37, 99, 235, 0.14);
   background: var(--panel);
   color: var(--text);
 }
 
 .input:focus {
-  outline: 2px solid rgba(244, 183, 64, 0.5);
+  outline: 2px solid rgba(37, 99, 235, 0.35);
   border-color: transparent;
 }
 
@@ -241,7 +243,7 @@ button {
   background: var(--panel);
   padding: 20px;
   border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(37, 99, 235, 0.08);
 }
 
 footer {
@@ -254,7 +256,7 @@ footer {
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(6, 6, 10, 0.8);
+  background: rgba(15, 23, 42, 0.4);
   display: grid;
   place-items: center;
   padding: 20px;
@@ -263,11 +265,11 @@ footer {
 
 .modal {
   width: min(900px, 95vw);
-  background: rgba(19, 19, 26, 0.98);
+  background: rgba(255, 255, 255, 0.98);
   border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.12);
   padding: 28px;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 30px 80px rgba(37, 99, 235, 0.14);
 }
 
 .modal-header {
@@ -330,7 +332,7 @@ footer {
   background: var(--panel-2);
   padding: 18px;
   border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.08);
   display: grid;
   gap: 8px;
 }
@@ -341,7 +343,7 @@ footer {
 }
 
 .card-action:hover {
-  border-color: rgba(244, 183, 64, 0.3);
+  border-color: rgba(37, 99, 235, 0.28);
   transform: translateY(-2px);
 }
 
@@ -358,7 +360,7 @@ footer {
 
 .card-action {
   background: var(--panel);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(37, 99, 235, 0.08);
   color: var(--text);
   width: 100%;
 }
@@ -378,7 +380,7 @@ footer {
 }
 
 .score-pill {
-  background: linear-gradient(135deg, rgba(244, 183, 64, 0.25), rgba(46, 196, 182, 0.2));
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.18), rgba(96, 165, 250, 0.22));
   padding: 8px 14px;
   border-radius: 999px;
   font-weight: 600;
@@ -452,8 +454,8 @@ footer {
 }
 
 .tracker-stat {
-  background: linear-gradient(180deg, rgba(244, 183, 64, 0.12), rgba(19, 19, 26, 0.95));
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, rgba(37, 99, 235, 0.08), rgba(255, 255, 255, 0.96));
+  border: 1px solid rgba(37, 99, 235, 0.1);
   border-radius: 20px;
   padding: 20px;
 }
@@ -504,8 +506,8 @@ footer {
   gap: 16px;
   padding: 14px 16px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(37, 99, 235, 0.03);
+  border: 1px solid rgba(37, 99, 235, 0.06);
 }
 
 .tracker-score-chip {
@@ -513,7 +515,7 @@ footer {
   text-align: center;
   padding: 10px 12px;
   border-radius: 999px;
-  background: linear-gradient(135deg, rgba(244, 183, 64, 0.22), rgba(46, 196, 182, 0.18));
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.18), rgba(96, 165, 250, 0.2));
   font-weight: 700;
 }
 
@@ -533,7 +535,7 @@ footer {
 .difficulty-bar {
   width: 100%;
   height: 12px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(37, 99, 235, 0.1);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -551,13 +553,13 @@ footer {
   gap: 14px;
   padding: 14px 16px;
   border-radius: 16px;
-  background: rgba(46, 196, 182, 0.08);
-  border: 1px solid rgba(46, 196, 182, 0.14);
+  background: rgba(37, 99, 235, 0.06);
+  border: 1px solid rgba(37, 99, 235, 0.12);
 }
 
 .insight-pill.warning {
-  background: rgba(244, 183, 64, 0.08);
-  border-color: rgba(244, 183, 64, 0.16);
+  background: rgba(96, 165, 250, 0.08);
+  border-color: rgba(96, 165, 250, 0.16);
 }
 
 .trend-chart {
@@ -584,15 +586,15 @@ footer {
   align-items: flex-end;
   padding: 6px;
   border-radius: 20px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.08));
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: linear-gradient(180deg, rgba(37, 99, 235, 0.02), rgba(37, 99, 235, 0.08));
+  border: 1px solid rgba(37, 99, 235, 0.06);
 }
 
 .trend-bar-fill {
   width: 100%;
   border-radius: 14px;
   background: linear-gradient(180deg, var(--accent), var(--accent-2));
-  box-shadow: 0 12px 30px rgba(46, 196, 182, 0.22);
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.22);
 }
 
 .trend-point strong {
@@ -628,8 +630,8 @@ footer {
   display: grid;
   place-items: center;
   text-align: center;
-  background: radial-gradient(circle at top, rgba(31, 31, 47, 0.96), rgba(11, 11, 16, 0.96));
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.98), rgba(233, 243, 255, 0.98));
+  border: 1px solid rgba(37, 99, 235, 0.08);
 }
 
 .readiness-center strong {
@@ -654,8 +656,8 @@ footer {
   gap: 14px;
   padding: 14px 16px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(37, 99, 235, 0.03);
+  border: 1px solid rgba(37, 99, 235, 0.06);
 }
 
 .readiness-line span {
@@ -676,7 +678,7 @@ footer {
 }
 
 .modal::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(37, 99, 235, 0.28);
   border-radius: 999px;
 }
 

@@ -1,39 +1,13 @@
-const express = require("express");
-const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const cors = require("cors");
-const authRoutes = require("./routes/authRoutes");
-const interviewRoutes = require("./routes/interviewRoutes");
-
 dotenv.config();
 
-const app = express();
+const app = require("./app");
+const { connectDatabase } = require("./config/database");
 
-app.use(express.json());
-app.use(cors());
+const PORT = process.env.PORT || 5000;
 
-app.use("/api/auth", authRoutes);
-app.use("/api/interviews", interviewRoutes);
-
-app.get("/", (req, res) => {
-  res.json({ message: "NextStep AI API is running." });
-});
-
-app.use((err, req, res, next) => {
-  const status = err.status || 500;
-  res.status(status).json({
-    message: err.message || "Server Error",
-    errors: err.errors || null,
-  });
-});
-
-const PORT = process.env.PORT;
-const MONGO_URI = process.env.MONGO_URI;
-
-mongoose
-  .connect(MONGO_URI)
+connectDatabase()
   .then(() => {
-    console.log("MongoDB connected");
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { API_BASE_URL } from "../config/api";
 import {
   mergeInterviewCache,
   readInterviewCache,
   subscribeInterviewCache,
-} from "../utils/interviewStore";
-
-const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+} from "../services/interviewStore";
 
 const formatLabel = (value) => {
   if (!value) return 'General';
@@ -107,7 +106,7 @@ const SkillTracker = ({ token }) => {
       try {
         setError('');
         setLoading(true);
-        const res = await fetch(`${apiBase}/api/interviews`, {
+        const res = await fetch(`${API_BASE_URL}/api/interviews`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

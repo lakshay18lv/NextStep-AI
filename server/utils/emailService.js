@@ -1,48 +1,71 @@
 const nodemailer = require("nodemailer");
 
+const normalizeEnv = (value) =>
+  String(value || "")
+    .trim()
+    .replace(/\s+/g, "");
+
 const getTransporter = () => {
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_APP_PASSWORD) {
-    return null;
+  const user = normalizeEnv(process.env.SMTP_USER || process.env.EMAIL_USER);
+  const pass = normalizeEnv(
+    process.env.SMTP_PASS || process.env.EMAIL_APP_PASSWORD,
+  );
+
+  if (!user || !pass) {
+    throw new Error("Email credentials are missing. Set SMTP_USER and SMTP_PASS.");
   }
 
-  return nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_APP_PASSWORD,
-    },
-  });
+  const host = String(process.env.SMTP_HOST || "").trim();
+  const port = Number(process.env.SMTP_PORT) || 587;
+  const secure =
+    String(process.env.SMTP_SECURE || "").toLowerCase() === "true" ||
+    port === 465;
+
+  return nodemailer.createTransport(
+    host
+      ? {
+          host,
+          port,
+          secure,
+          auth: { user, pass },
+        }
+      : {
+          service: "gmail",
+          auth: { user, pass },
+        },
+  );
 };
 
-const sendVerificationEmail = async ({ email, name, token }) => {
+const sendVerificationEmail = async ({
+  email,
+  name = "",
+  token,
+  verificationLink,
+}) => {
   const transporter = getTransporter();
-  if (!transporter) {
-    throw new Error("Email transporter is not configured");
-  }
+  const from = process.env.EMAIL_FROM || process.env.SMTP_USER || "no-reply@example.com";
+  const baseUrl = String(
+    process.env.FRONTEND_URL ||
+      process.env.CLIENT_URL ||
+      process.env.APP_BASE_URL ||
+      "http://localhost:5173",
+  ).replace(/\/$/, "");
+  const verifyLink =
+    verificationLink ||
+    `${baseUrl}/verify-email?email=${encodeURIComponent(
+      email,
+    )}&token=${encodeURIComponent(token)}`;
 
-  const appBaseUrl = process.env.APP_BASE_URL || "http://localhost:5000";
-  const verificationUrl = `${appBaseUrl}/api/auth/verify-email?token=${token}`;
-
-  await transporter.sendMail({
-    from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
+  const mailOptions = {
+    from,
     to: email,
-    subject: "Verify your NextStep AI account",
-    html: `
-      <div style="font-family: Arial, sans-serif; color: #1f2937; line-height: 1.6;">
-        <h2>Verify your NextStep AI account</h2>
-        <p>Hello ${name || "User"},</p>
-        <p>Click the button below to verify your email address and activate your account.</p>
-        <p style="margin: 24px 0;">
-          <a href="${verificationUrl}" style="background: #111827; color: #ffffff; padding: 12px 20px; border-radius: 8px; text-decoration: none;">
-            Verify Email
-          </a>
-        </p>
-        <p>If the button does not work, copy and paste this link into your browser:</p>
-        <p>${verificationUrl}</p>
-        <p>This link expires in 24 hours.</p>
-      </div>
-    `,
-  });
+    subject: "NextStep - Verify your email",
+    text: `Hi ${name || ""}\n\nYour verification link: ${verifyLink}\n\nThis link expires in 24 hours.`,
+    html: `<p>Hi ${name || ""},</p><p>Welcome to NextStep AI.</p><p>Click to verify your email:</p><p><a href="${verifyLink}">Verify email</a></p><p>This link expires in 24 hours.</p>`,
+  };
+
+  const info = await transporter.sendMail(mailOptions);
+  return { sent: true, info, verifyLink };
 };
 
 module.exports = { sendVerificationEmail };
